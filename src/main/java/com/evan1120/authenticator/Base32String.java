@@ -6,38 +6,36 @@ import java.util.Locale;
 /**
  * Base32中只有A-Z和2-7这些字符。
  */
-public class Base32String {
-    private static final Base32String INSTANCE = new Base32String("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"); // RFC
-    // 4648/3548
+class Base32String {
 
-    static Base32String getInstance() {
+    //  RFC 4648/3548
+    private static final Base32String INSTANCE = new Base32String("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567");
+
+    private static Base32String getInstance() {
         return INSTANCE;
     }
 
-    private String ALPHABET;
-    private char[] DIGITS;
     private int MASK;
     private int SHIFT;
     private HashMap<Character, Integer> CHAR_MAP;
 
-    static final String SEPARATOR = "-";
+    private static final String SEPARATOR = "-";
 
-    protected Base32String(String alphabet) {
-        this.ALPHABET = alphabet;
-        DIGITS = ALPHABET.toCharArray();
+    private Base32String(String alphabet) {
+        char[] DIGITS = alphabet.toCharArray();
         MASK = DIGITS.length - 1;
         SHIFT = Integer.numberOfTrailingZeros(DIGITS.length);
-        CHAR_MAP = new HashMap<Character, Integer>();
+        CHAR_MAP = new HashMap<>();
         for (int i = 0; i < DIGITS.length; i++) {
             CHAR_MAP.put(DIGITS[i], i);
         }
     }
 
-    public static byte[] decode(String encoded) throws DecodingException {
+    static byte[] decode(String encoded) throws DecodingException {
         return getInstance().decodeInternal(encoded);
     }
 
-    protected byte[] decodeInternal(String encoded) throws DecodingException {
+    private byte[] decodeInternal(String encoded) throws DecodingException {
         encoded = encoded.trim().replaceAll(SEPARATOR, "").replaceAll(" ", "");
         encoded = encoded.replaceFirst("[=]*$", "");
         encoded = encoded.toUpperCase(Locale.US);
@@ -65,8 +63,8 @@ public class Base32String {
         return result;
     }
 
-    public static class DecodingException extends Exception {
-        public DecodingException(String message) {
+    static class DecodingException extends Exception {
+        DecodingException(String message) {
             super(message);
         }
     }

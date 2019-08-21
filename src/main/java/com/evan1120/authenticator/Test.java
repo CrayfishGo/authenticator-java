@@ -20,7 +20,7 @@ public class Test {
 
                     //测试算法
                     String secret = "ywxp oot7 gau6 ui3y 3ijj dpsv yvtf n672";
-                    String result = AuthenicationUtil.getCurrentCode(secret);
+                    String result = PinCodeUtil.getCurrentCode(secret);
                     System.out.println(result);
                 } catch (Exception e) {
                     e.printStackTrace();

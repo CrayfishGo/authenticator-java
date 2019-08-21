@@ -9,44 +9,49 @@ import java.security.NoSuchAlgorithmException;
 /**
  *
  */
-public class AuthenicationUtil {
+public class PinCodeUtil {
 
-    private static long mStartTime = 0;
-    private static final long mTimeStep = 30;
+    private static final long TIME_STEP = 30;
 
+    /**
+     * 根据密钥获取当前pin code
+     *
+     * @param secret
+     * @return
+     * @throws OtpSourceException
+     */
     public static String getCurrentCode(String secret) throws OtpSourceException {
         long otp_state = getValueAtTime(System.currentTimeMillis() / 1000);
         return computePin(secret, otp_state);
     }
 
-    private static String computePin(String secret, long otp_state)
-            throws OtpSourceException {
-        if (secret == null || secret.length() == 0) {
-            throw new OtpSourceException("Null or empty secret");
+    // 计算pin code
+    private static String computePin(String secret, long otp_state) throws OtpSourceException {
+        if (secret == null || secret.trim().length() == 0) {
+            throw new OtpSourceException("Null or empty secret is not allowed");
         }
         try {
-            PasscodeGenerator.Signer signer = getSigningOracle(secret);
-            PasscodeGenerator pcg = new PasscodeGenerator(signer, 6);
-
+            PinCodeGenerator.Signer signer = getSigning(secret);
+            PinCodeGenerator pcg = new PinCodeGenerator(signer, 6);
             return pcg.generateResponseCode(otp_state);
-
         } catch (GeneralSecurityException e) {
             throw new OtpSourceException("Crypto failure", e);
         }
     }
 
-
-    public static long getValueAtTime(long time) {
-        long timeSinceStartTime = time - mStartTime;
+    // 获取时间计数器
+    private static long getValueAtTime(long time) {
+        long startTime = 0;
+        long timeSinceStartTime = time - startTime;
         if (timeSinceStartTime >= 0) {
-            return timeSinceStartTime / mTimeStep;
+            return timeSinceStartTime / TIME_STEP;
         } else {
-            return (timeSinceStartTime - (mTimeStep - 1)) / mTimeStep;
+            return (timeSinceStartTime - (TIME_STEP - 1)) / TIME_STEP;
         }
     }
 
-
-    private static PasscodeGenerator.Signer getSigningOracle(String secret) {
+    // 根据密钥获取签名
+    private static PinCodeGenerator.Signer getSigning(String secret) {
         try {
             byte[] keyBytes = Base32String.decode(secret);
             final Mac mac = Mac.getInstance("HMACSHA1");
