@@ -1,13 +1,12 @@
-package com.evan1120.qrcode;
+package org.crayfishgo.qrcode;
 
-import com.evan1120.util.ZxingUtils;
+import org.crayfishgo.util.ZxingUtils;
 
 /**
  * @author evan
  * @title: QRCodeGenerator
  * @projectName google-authenticator
  * @description: 验证器二维码生成  URI的格式： otpauth://totp/myGitlab.com:admin@example.com?secret=dgf3j5csiu2jn6wehechiuuclyhcnyaw&issuer=myGitlab.com
- * @date 2019-08-21 14:22
  */
 public class QRCodeGenerator {
 
@@ -25,6 +24,10 @@ public class QRCodeGenerator {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(generateQRCodeWithBase64Code("abf3j5csiu2jn6wehechiuuclyh44yaw", "mesapp"));
     }
 
 }

@@ -1,6 +1,6 @@
-package com.evan1120.test;
+package org.crayfishgo.test;
 
-import com.evan1120.authenticator.PinCodeUtil;
+import org.crayfishgo.authenticator.PinCodeUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +20,7 @@ public class Test {
                     String hehe = dateFormat.format(now);
 
                     //测试算法
-                    String secret = "dgf3j5csiu2jn6wehechiuuclyhcnyaw";
+                    String secret = "abf3j5csiu2jn6wehechiuuclyh44yaw";
                     String result = PinCodeUtil.getCurrentCode(secret);
                     System.out.println(hehe + " -- " + result);
                 } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.evan1120.util;
+package org.crayfishgo.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -26,7 +26,6 @@ import java.util.*;
  * @title: ZxingUtils
  * @projectName google-authenticator
  * @description: 二维码生成工具类
- * @date 2019-08-21 14:22
  */
 public class ZxingUtils {
 

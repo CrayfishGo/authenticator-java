@@ -1,4 +1,4 @@
-package com.evan1120.authenticator;
+package org.crayfishgo.authenticator;
 
 import java.util.HashMap;
 import java.util.Locale;
